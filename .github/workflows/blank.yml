@@ -1,0 +1,23 @@
+name: Merge Queue Test Workflow
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  merge_group:
+
+jobs:
+  random-approval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Randomly pass or fail with 50% chance
+        run: |
+          echo "Randomly deciding pass or fail..."
+          if [ $(( RANDOM % 2 )) -eq 0 ]; then
+            echo "PASSED: Manual approval simulated."
+          else
+            echo "FAILED: Manual approval simulated."
+            exit 1
+          fi
